@@ -1,0 +1,105 @@
+# academic-writing-skills
+
+General Indonesian academic writing skills, not tied to one campus. Four skills that carry a document from outline to submission: build the frame, draft the chapters, edit the language, and audit the result. Campus rules are variables, not hardcoded text. Give the skill a guide file and it adapts. Without a guide it uses common Indonesian defaults and marks every uncertain rule `[CHECK: campus guide]`.
+
+Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root, so any agent that reads that format can use them.
+
+## Skills
+
+| Skill | What it does |
+| --- | --- |
+| `outline` | Builds and checks the outline before drafting, or condenses existing files into one outline. Starts from a core map of the gap (Should versus Is), adapts to any campus guide through 14 variables, checks with the universal checklist, and gives the title last. |
+| `draft` | Drafts Chapter I to Chapter V chapter by chapter from the student own material, with evidence-first discipline, quantitative, qualitative, and R and D paths, and export to Markdown, DOCX, and PDF. |
+| `edit` | Edits Indonesian academic prose without changing its facts: EYD V and KBBI, effective sentences, and removal of machine-writing patterns, with clear editing scopes from typo fix to rewrite. |
+| `audit` | Audits a draft against its campus guide and its own evidence: stage gates, four layered checks, reference verification through Garuda, SINTA, OpenAlex, and Crossref, and a prioritized findings report. |
+
+## How the campus adapter works
+
+1. Give the skill a guide file (PDF or DOCX). It reads the guide and fills the 14 variables in `skills/outline/references/guide-adapter.md`.
+2. Without a guide file, it uses the preset in `shared/campus-presets.md` when the campus has one, or the national defaults in `shared/presets/generic.yml`.
+3. Every variable value shown to the user carries its source: guide plus page, preset, or default marked `[CHECK]`. A value with no source never appears.
+4. Add a new campus by copying `shared/presets/generic.yml`, filling it from the guide, and listing it in `shared/campus-presets.md`.
+
+## Install
+
+### Hermes
+
+```bash
+git clone https://github.com/Nbill27/academic-writing-skills.git
+cp -r academic-writing-skills/skills/* ~/.hermes/skills/
+hermes skills list
+```
+
+Or run the installer from the repo root:
+
+```bash
+./install.sh
+```
+
+### CodeBuddy
+
+```bash
+git clone https://github.com/Nbill27/academic-writing-skills.git
+cp -r academic-writing-skills/skills/* ~/.codebuddy/skills/
+```
+
+Project scope instead of user scope: copy into `.codebuddy/skills/` inside the project.
+
+### Claude Code
+
+```bash
+./install.sh --claude-code
+```
+
+Or copy a skill folder into `~/.claude/skills/`, keeping the folder name. The `name` in the frontmatter matches the directory name, as the spec requires.
+
+### OpenCode
+
+```bash
+./install.sh --opencode
+```
+
+Or copy a skill folder into `~/.config/opencode/skills/`, keeping the folder name.
+
+### Codex
+
+```bash
+./install.sh --codex
+```
+
+Or copy a skill folder into `~/.codex/skills/`, keeping the folder name.
+
+## Use
+
+Ask the agent to outline, draft, edit, or audit an academic document. The skill loads when the request matches: outline, draft chapter, background, literature review, research methods, results and discussion, conclusions and suggestions, check language, check spelling, edit manuscript, audit report, check bibliography, or ready for defense.
+
+Typical flow: `outline` for the outline, `draft` for drafting one chapter at a time, `edit` for language, `audit` for the final check before submission.
+
+## Validate
+
+```bash
+python3 scripts/validate_package.py
+```
+
+Checks frontmatter names and descriptions, required repo files, local link targets, and absolute local paths in skill files.
+
+## Notes
+
+- The skills never invent data, respondents, sources, numbers, or results. Missing material is marked `[NEED: ...]` and unverified material is marked `[CHECK: ...]`.
+- The skills refuse ghostwriting and requests to disguise AI output as the student own writing. Removing machine patterns from the student own writing is honest editing. Evading AI detectors is not.
+- A preset never replaces the guide. When a preset and the user guide disagree, the guide wins and the difference is flagged.
+
+## Attribution
+
+This repo adapts mechanics, workflows, and reference material from these MIT-licensed projects. Their original authors keep their copyright. See each source for its full text.
+
+- [rangka](https://github.com/bryankwandou/rangka) by Bryan Kwandou: core map, title last, pedoman adapter with 14 variables, universal checklist, genre templates, campus notes.
+- [naskah-id](https://github.com/nothinx/naskah-id) by nothinx: EYD V and KBBI editing modules, machine-pattern catalog, do-not-correct list, change boundaries, long-document workflow, reference verification.
+- [proposal-skripsi-skill](https://github.com/bimajanuri/proposal-skripsi-skill) by Bima Januri: Chapter I to III proposal pipeline, 28 campus presets, stage gates, layered QC with red-team review, statistical analysis from real datasets, citation export.
+- [indonesian-academic-writing](https://github.com/azkadani214/indonesian-academic-writing) by azkadani214: modular references by task, institution profile template, package validation script.
+- [laporan-generator](https://github.com/muadzhdz/laporan-generator) by muadzhdz: YAML campus presets, Pandoc and Typst export to DOCX and PDF.
+- [Bina Insani KP Companion](https://github.com/Nbill27/kp-skill) by Muhammad Nabil Deja: chapter drafting guidance, evidence classification and traceability, audit phases, severity rubric, finding report template.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

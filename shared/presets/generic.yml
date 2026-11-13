@@ -1,0 +1,43 @@
+# Preset: national standard (margins 4-4-3-3)
+# Source: common Indonesian thesis format. Every value is [CHECK: campus guide]
+# until confirmed against the campus guide.
+preset_id: "generic"
+name: "National standard (4-4-3-3)"
+description: "Generic Indonesian thesis format with extra 4 cm left margin for binding."
+
+# Page margins
+margin_top: 4cm
+margin_bottom: 3cm
+margin_left: 4cm
+margin_right: 3cm
+
+# Typography
+font_family: "Times New Roman"
+font_size: 12pt
+line_spacing: double
+first_line_indent: 1.25cm
+
+# Heading numbering
+heading_chapter_prefix: "BAB "
+heading_chapter_num_format: "roman"
+heading_sub_dot: true
+heading_subsub_dot: false
+
+# Abstract
+abstract_languages:
+  - id
+  - en
+abstract_max_words: 250
+
+# Citation
+citation_style: "author-year"
+
+# Chapters
+chapter_count: 5
+
+# Numbering
+figure_table_numbering: "by-chapter"
+
+# Cover
+cover_title_size: 14pt
+cover_title_bold: true
