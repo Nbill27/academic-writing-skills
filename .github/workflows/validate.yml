@@ -16,6 +16,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # ubuntu-latest moved to 26.04, which has no setup-python builds below
+        # 3.14, so pin the runner instead of the newest image.
         os: [ubuntu-24.04]
         python: ["3.10", "3.12", "3.13"]
         include:
@@ -52,6 +54,7 @@ jobs:
           test -f "$home/.hermes/skills/edit/SKILL.md"
           test -f "$home/.hermes/skills/audit/SKILL.md"
           test -f "$home/.hermes/skills/shared/workflow-contract.md"
+          test -f "$home/.hermes/skills/academic-writing/scripts/update.py"
           HOME="$home" sh ./install.sh
           test -f "$home/.hermes/skills/academic-writing/SKILL.md"
 
