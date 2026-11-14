@@ -34,9 +34,11 @@ esac
 
 mkdir -p "$TARGET"
 for skill in academic-writing outline draft edit audit; do
+  rm -rf "$TARGET/$skill"
   mkdir -p "$TARGET/$skill"
   cp -r "skills/$skill/." "$TARGET/$skill/"
 done
+rm -rf "$TARGET/shared"
 mkdir -p "$TARGET/shared"
 cp -r "shared/." "$TARGET/shared/"
 echo "Installed skill family into $TARGET"

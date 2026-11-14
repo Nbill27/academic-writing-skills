@@ -51,3 +51,7 @@ Never invent data, references, respondents, results, DOI metadata, approvals, or
 - `../audit/SKILL.md`
 
 Load only relevant specialist instructions and their required references.
+
+## Updater
+
+The installed dispatcher folder ships its own updater at `scripts/update.py` (standard library only). From the installed dispatcher folder, `python scripts/update.py version` shows the installed version, `check-update` compares it with the latest GitHub Release without changing files, `update` downloads that release, validates it, backs the current family up outside the skills directory, and replaces it, and `rollback` restores the latest backup. There is no automatic update. A v1.0.0 installation does not have the updater yet: install v1.1.0 once with the installer first, then use the updater for later versions.

@@ -11,6 +11,7 @@ Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root,
 - [Repository layout](#repository-layout)
 - [How the campus adapter works](#how-the-campus-adapter-works)
 - [Install](#install)
+- [Updating](#updating)
 - [Use](#use)
 - [Validate](#validate)
 - [Notes](#notes)
@@ -209,6 +210,43 @@ rm -rf ~/.claude/skills/academic-writing ~/.claude/skills/outline ~/.claude/skil
 ```
 
 Adjust the base directory for the agent you installed into. Remove `shared/` only if no other skill set uses it.
+
+## Updating
+
+There is no auto-update. Installing copies the skill folders into the agent's skills directory, so the agent reads that copy, not this repository. Pulling the latest repo alone does not change an installed copy.
+
+To update an installed family:
+
+```bash
+cd academic-writing-skills
+git pull
+./install.sh
+```
+
+Replace `./install.sh` with `./install.sh --claude-code` (or another flag) to update only one agent. The installer removes each skill folder before copying, so a reinstall cannot leave behind a file that no longer ships in the new version. A plain `cp -r` does not do this: it merges into the old folder and leaves stale files in place, so use the installer for updates.
+
+### Updating with the updater
+
+From v1.1.0 on, the installed dispatcher folder ships its own updater at `scripts/update.py` (standard library only, no Git needed). Run it from the installed dispatcher folder, for example `~/.hermes/skills/academic-writing/`:
+
+```bash
+python scripts/update.py version
+python scripts/update.py check-update
+python scripts/update.py update
+python scripts/update.py rollback
+```
+
+`check-update` only compares the installed version with the latest GitHub Release and changes nothing. `update` downloads that release, extracts it safely, runs the package validator from the extracted release, backs the current family up outside the skills directory, and only then replaces the five skills plus `shared/`; if the replacement fails, the backup is restored. `rollback` restores the latest backup. Add `--yes` to skip the confirmation prompt, and `--to 1.2.0` to update to a specific version instead of the latest. There is no automatic update. The updater needs Python 3.10 or newer; it does not need Git or a package manager. SHA-256 is only claimed as a cryptographic check when the release carries a `SHA256SUMS.txt` asset with a matching entry and the hash matches; otherwise the update is validated by safe extraction plus the package validator.
+
+Bootstrap: a v1.0.0 installation has no updater yet, so install v1.1.0 once with the installer above first. After that, the updater handles later versions. Backups are kept in the user cache directory (`~/.cache/academic-writing-skills/backups` on Linux and macOS, `%LOCALAPPDATA%\academic-writing-skills\backups` on Windows), not inside the skills directory.
+
+After updating, start a new agent session. A running session may still use the old copy. Then check the installed version matches the repo:
+
+```bash
+grep "^version:" ~/.hermes/skills/academic-writing/SKILL.md
+```
+
+Compare it with the newest entry in [CHANGELOG.md](CHANGELOG.md). There is no update notification: check the changelog or the release tags on GitHub when you want to know if a new version exists.
 
 ## Use
 

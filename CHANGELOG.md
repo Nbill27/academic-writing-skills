@@ -2,6 +2,22 @@
 
 All notable changes to this repository. Versions refer to the five skills in `skills/`.
 
+## Unreleased
+
+### Added
+
+- `skills/academic-writing/scripts/update.py` — standard-library-only updater for the installed family: `version`, `check-update` (read-only, compares the installed version with the latest GitHub Release), `update` (downloads the release zipball, extracts it safely, runs `scripts/validate_package.py` from the extracted release, backs the current family up outside the skills directory, then replaces the five skills plus `shared/`, restoring the backup if the replacement fails), and `rollback` (restores the latest backup). It re-executes itself from a temporary copy so it can replace its own folder, and it refuses a release whose skill versions do not match its tag or that lacks a skill, `shared/`, or the updater itself. No automatic update, no Git, no extra dependency. SHA-256 is verified only when the release carries a `SHA256SUMS.txt` asset with an entry for the downloaded archive and the hash matches; otherwise integrity is established by safe extraction plus the validator, and the updater says so instead of claiming a checksum check.
+- `tests/test_updater.py` — sixteen unit tests with mocked network and local release zips: version parsing and frontmatter reading, family version agreement, safe extraction (rejects `..`, absolute paths), SHA-256 verification against a `SHA256SUMS.txt` asset (match, mismatch, and no asset), check-update reporting, update then rollback, refusing an older release, refusing a version mismatch, refusing a release missing a skill or `shared/`, and keeping unrelated skills untouched. No network needed.
+- README documents the updater in the Updating section.
+
+### Changed
+
+- `install.sh` removes each skill folder (and `shared/`) before copying, so a reinstall cannot leave behind a file that no longer ships in the new version.
+
+### Notes
+
+- The updater ships in the next release (v1.1.0). A v1.0.0 installation has no updater yet: install v1.1.0 once with the installer first, then use the updater for later versions.
+
 ## 1.0.0 — 2026-11-14
 
 First versioned release. The package now has five skills instead of four, with a workflow dispatcher, genre routing, and per-genre audit modules. The corrections below fix architecture and over-strict audit rules; the honesty rules are unchanged.
