@@ -1,3 +1,5 @@
+![academic-writing-skills banner](docs/banner.jpg)
+
 # academic-writing-skills
 
 General Indonesian academic writing skills, not tied to one campus. Five skills carry a document from outline to submission: a dispatcher routes the task, then outline builds the frame, draft writes the sections, edit fixes the language, and audit checks the result. They cover research theses, journal articles, internship reports, and technical reports. Campus rules are variables, not hardcoded text. Give the skill a guide file and it adapts. Without a guide it uses common Indonesian defaults and marks every uncertain rule `[CHECK: campus guide]`.
@@ -75,6 +77,8 @@ academic-writing-skills/
 │   ├── workflow-contract.md  # shared routing, evidence labels, handoffs
 │   └── presets/
 │       └── generic.yml       # national default, 4-4-3-3 margins
+├── docs/
+│   └── banner.jpg            # README banner
 ├── scripts/
 │   └── validate_package.py   # packaging checks, standard library only
 ├── tests/
