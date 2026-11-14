@@ -2,7 +2,7 @@
 
 All notable changes to this repository. Versions refer to the five skills in `skills/`.
 
-## Unreleased
+## 1.1.0 — 2026-11-14
 
 ### Added
 
@@ -16,7 +16,7 @@ All notable changes to this repository. Versions refer to the five skills in `sk
 
 ### Notes
 
-- The updater ships in the next release (v1.1.0). A v1.0.0 installation has no updater yet: install v1.1.0 once with the installer first, then use the updater for later versions.
+- This release ships the updater. A v1.0.0 installation has no updater yet: install v1.1.0 once with the installer first, then use the updater for later versions.
 
 ## 1.0.0 — 2026-11-14
 

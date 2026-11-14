@@ -1,7 +1,7 @@
 ---
 name: draft
 description: "Draft academic and professional document sections from the user's own notes, data, documents, outline, and verified sources. Supports research chapters, articles, internship reports, and technical reports with evidence-first safeguards."
-version: 1.0.0
+version: 1.1.0
 license: MIT
 compatibility: "Hermes, CodeBuddy, Claude Code, OpenCode, Codex, and any agent that reads the Agent Skills format."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
