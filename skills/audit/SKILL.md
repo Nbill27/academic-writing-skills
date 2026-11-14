@@ -1,6 +1,7 @@
 ---
 name: audit
 description: "Audit academic and professional documents against applicable guides, genre, evidence, methodology, citations, language, and formatting. Uses universal checks, genre modules, applicability statuses, traceability, and prioritized findings."
+version: 1.0.0
 license: MIT
 compatibility: "Hermes, CodeBuddy, Claude Code, OpenCode, Codex, and any agent that reads the Agent Skills format."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash

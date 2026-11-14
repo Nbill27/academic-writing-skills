@@ -219,6 +219,7 @@ python3 scripts/validate_package.py /path/to/academic-writing-skills
 
 ## Notes
 
+- Releases are versioned tags starting at v1.0.0; see [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 - The skills never invent data, respondents, sources, numbers, or results. Missing material is marked `[NEED: ...]` and unverified material is marked `[CHECK: ...]`.
 - The skills refuse ghostwriting and requests to disguise AI output as the student own writing. Removing machine patterns from the student own writing is honest editing. Evading AI detectors is not.
 - A preset never replaces the guide. When a preset and the user guide disagree, the guide wins and the difference is flagged.
