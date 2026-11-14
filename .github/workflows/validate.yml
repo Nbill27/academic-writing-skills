@@ -1,0 +1,64 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: package (${{ matrix.python }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]
+        python: ["3.10", "3.12", "3.13"]
+        include:
+          - os: macos-latest
+            python: "3.13"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Compile the scripts
+        run: python -m py_compile scripts/validate_package.py
+
+      - name: Validate the package
+        run: python scripts/validate_package.py
+
+      - name: Run the unit tests
+        run: python -m unittest discover -s tests
+
+      - name: Check the shell installer parses
+        if: runner.os != 'Windows'
+        run: sh -n install.sh
+
+      - name: Smoke-test the shell installer
+        if: runner.os != 'Windows'
+        run: |
+          home="$(mktemp -d)"
+          HOME="$home" sh ./install.sh
+          test -f "$home/.hermes/skills/academic-writing/SKILL.md"
+          test -f "$home/.hermes/skills/outline/SKILL.md"
+          test -f "$home/.hermes/skills/draft/SKILL.md"
+          test -f "$home/.hermes/skills/edit/SKILL.md"
+          test -f "$home/.hermes/skills/audit/SKILL.md"
+          test -f "$home/.hermes/skills/shared/workflow-contract.md"
+          HOME="$home" sh ./install.sh
+          test -f "$home/.hermes/skills/academic-writing/SKILL.md"
+
+      - name: Reject an unknown flag
+        if: runner.os != 'Windows'
+        run: |
+          if sh ./install.sh --nonsense; then
+            echo "install.sh accepted an unknown flag"
+            exit 1
+          fi
