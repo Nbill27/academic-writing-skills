@@ -7,6 +7,7 @@ Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root,
 ## Contents
 
 - [Skills](#skills)
+- [Skill flow](#skill-flow)
 - [Repository layout](#repository-layout)
 - [How the campus adapter works](#how-the-campus-adapter-works)
 - [Install](#install)
@@ -27,6 +28,26 @@ Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root,
 | `audit` | Audits a draft against its campus guide and its own evidence: stage gates, four layered checks, reference verification through Garuda, SINTA, OpenAlex, and Crossref, and a prioritized findings report. |
 
 Each skill folder also holds a `references/` directory with the deep material the skill loads on demand, for example `skills/outline/references/guide-adapter.md` or `skills/edit/references/ai-patterns.md`.
+
+## Skill flow
+
+```mermaid
+flowchart LR
+    U([User request]) --> W[academic-writing<br/>Dispatcher]
+    W --> O[outline]
+    W --> D[draft]
+    W --> E[edit]
+    W --> A[audit]
+    O --> D
+    D --> E
+    E --> A
+    O --> OUT([Ready for review<br/>or submission])
+    D --> OUT
+    E --> OUT
+    A --> OUT
+```
+
+The dispatcher routes each request to the smallest suitable skill or chain: a single skill for a single job, the full `outline` → `draft` → `edit` → `audit` chain for end-to-end work, skipping stages that are already done or irrelevant. It also picks the genre route: research theses use the chapter references (I–V), journal articles follow the target venue rules, internship and KP reports use placement checks, and technical reports follow purpose and evidence.
 
 ## Repository layout
 
