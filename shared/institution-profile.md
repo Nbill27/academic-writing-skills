@@ -1,43 +1,73 @@
-# Writing Guide Profile
+# Institution and task profile template
 
-Copy and fill only the parts that are needed. Square brackets hold user input, not information to guess. This file records the rules for one task. It does not decide the final shape of the document.
+Copy this file into the working project and fill only fields relevant to the current task. It is not an official guide and is not itself evidence of institutional policy.
 
 ## Task identity
 
-- Document type: [type]
-- Field, study program, and level: [detail]
-- Target institution or journal: [name]
-- Help type and output: [drafting, editing, or review, text or file]
-- Parts worked on: [scope]
+- Working title/topic: [user input]
+- Genre: [thesis / proposal / dissertation / journal article / internship-KP report / technical report / other]
+- Discipline and study program: [user input]
+- Academic level: [if applicable]
+- Institution and faculty: [user input]
+- Target journal/client/reader: [user input]
+- Requested scope/output: [outline / draft / edit / audit / other]
 
-## Applicable guide
+## Applicable source register
 
-| Document, template, or rubric | Version or year | Pages or sections | Applies to | Certainty status |
+| ID | Source | Issuer | Version/year | Page/section | Scope | Authority | Verification |
+|---|---|---|---|---|---|---|---|
+| G-01 | [guide/template/rubric] | [issuer] | [version] | [location] | [what it governs] | [program/faculty/university/journal] | [verified/partial/unavailable] |
+
+Record conflicts. A supervisor preference is not automatically an institutional rule unless confirmed to apply.
+
+## Structure adapter: 14 variables
+
+Use guide-derived values. Mark unconfirmed conventions `default [CHECK]`. Mark chapter-only items `not applicable` for non-chapter genres.
+
+| # | Variable | Value | Provenance | Status |
 |---|---|---|---|---|
-| [source] | [version] | [location] | [task] | [confirmed or unclear] |
+| 1 | Chapter/main-section count | [value] | [source] | [status] |
+| 2 | Problem statement location | [value] | [source] | [status] |
+| 3 | Literature section name | [value] | [source] | [status] |
+| 4 | Conceptual/theoretical framework location | [value] | [source] | [status] |
+| 5 | Results/discussion arrangement | [value] | [source] | [status] |
+| 6 | Heading numbering | [value] | [source] | [status] |
+| 7 | Maximum heading depth | [value] | [source] | [status] |
+| 8 | Citation style | [value] | [source] | [status] |
+| 9 | Abstract languages/length | [value] | [source] | [status] |
+| 10 | Mandatory front matter | [value] | [source] | [status] |
+| 11 | Table/figure numbering | [value] | [source] | [status] |
+| 12 | Mandatory output/supplement | [value] | [source] | [status] |
+| 13 | Writing systematics | [value] | [source] | [status] |
+| 14 | Similarity policy/threshold | [value] | [source] | [status] |
 
-## Task rules
+## Formatting and submission profile
 
-- Names and order of parts: [rule]
-- Mandatory and optional parts: [rule]
-- Page, paragraph, and numbering format: [rule and source]
-- Length limits and abstract rules: [rule]
-- Language, terms, and transliteration: [rule]
-- Citation style with edition: [rule]
-- Bibliography rules: [rule]
-- Tables, figures, equations, and appendices: [rule]
-- AI, data, and ethics policy that applies: [rule]
-
-## Draft mapping
-
-| Available content | Target part | Change needed | Information missing |
+| Item | Rule | Provenance | Status |
 |---|---|---|---|
-| [content] | [part] | [action] | [gap] |
+| Paper size/margins | [value] | [source] | [status] |
+| Font/size/spacing | [value] | [source] | [status] |
+| Heading/page numbering | [value] | [source] | [status] |
+| Tables/figures/captions | [value] | [source] | [status] |
+| File naming/export | [value] | [source] | [status] |
+| Appendices/forms | [value] | [source] | [status] |
+| Ethics/consent/confidentiality | [value] | [source] | [status] |
 
-## Assumptions and conflicts
+## Terminology and evidence
 
-Record unclear rules, temporary assumptions, and user decisions on conflicts. Never turn an assumption into an official rule without a source.
+| Term | Approved form | Meaning/context | Source/decision |
+|---|---|---|---|
+| [term] | [form] | [meaning] | [source] |
 
-## Sources and credit
+| ID | File/material | Type | What it supports | Inspection status | Confidentiality |
+|---|---|---|---|---|---|
+| E-01 | [file] | [guide/data/interview/observation/literature/draft/other] | [claim/section] | [read/partial/unreadable/not supplied] | [public/internal/restricted] |
 
-Adapted from assets/institution-profile.md in indonesian-academic-writing by azkadani214 (MIT).
+## Conflicts and handoff
+
+- Conflicts/assumptions/user decisions: [source A, source B, applied rule, confirmation]
+- Completed work: [outline/draft/edit/audit]
+- Open issues: [list]
+- `[NEED: ...]`: [list]
+- `[CHECK: ...]`: [list]
+- Next action: [skill/user action]

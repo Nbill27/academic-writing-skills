@@ -1,94 +1,76 @@
-# Stage gates
+# Conditional audit stage gates
 
-A failed gate means stop, fix, then continue. A draft that passes every stage but fails the layered checks is still not ready to submit.
+Use gates to determine readiness. Mark irrelevant gates Not applicable. Mark missing required evidence Needs work; inaccessible evidence Not verifiable.
 
-## Gate 0, clarification
+## Gate 0: task and scope
+- Genre, purpose, and current stage identified.
+- Institution/program/journal/client context identified when relevant.
+- Guide/rubric located where supplied; version and scope recorded.
+- Inspection boundaries state exactly which files/pages are accessible.
 
-- Level chosen explicitly by the user (S1 skripsi, S2 thesis, or S3 dissertation).
-- Topic stated clearly in one sentence.
-- Source folder named and available.
-- Research type known (quantitative, qualitative, or mixed).
-- Citation style and export format decided.
+## Gate 1: inventory
+- Accessible files classified by type and purpose.
+- Dataset row/column profile verified when analysis depends on it.
+- Literature records have identifying metadata or are marked incomplete.
+- Scanned, damaged, unreadable, or inaccessible files are identified.
+- Confidential information is handled with authority and consent.
 
-## Gate 1, inventory
+## Gate 2: evidence and sources
+- Claims trace to evidence, a citation, or labeled inference.
+- Data, quotations, and findings match inspected source material.
+- Metadata verified according to source type.
+- DOI resolution checked only when DOI is present or claimed; no-DOI sources are not failed.
+- Search terms/date recorded when online search is part of the task.
+- No invented authors, results, participants, or measurements.
 
-- Every file in the folder classified into literature, dataset, guide, draft, or other.
-- Every literature item has a title and a year, or is marked unreadable.
-- Every dataset has a verified row and column count.
-- Unreadable files (scans) are marked NEED_OCR.
-- No file is missing without an explanation.
+## Gate 3: purpose and structure
+- Purpose is specific and fits the target reader.
+- Required sections have clear functions and follow the applicable genre/guide.
+- Questions, objectives, requirements, and conclusions align where applicable.
+- No orphan claim, question, promise, or recommendation.
+- Scope limits are clear.
 
-## Gate 2, evidence and gap
+## Gate 4: method, process, or design
 
-- Every source has a DOI that resolves or a local file that was read.
-- A DOI that fails to resolve is marked UNVERIFIED.
-- Only 3 to 5 gaps, not 8 trivial ones.
-- No research name or author that is not in the sources.
-- Keywords and search dates recorded when online search was used.
+### Research path
+- Design is suitable and justified.
+- Quantitative checks: population, sampling, sample size, instrument origin, validity/reliability, assumptions, and analysis are checked only when applicable.
+- Qualitative checks: design, paradigm/approach, informant criteria, sampling, stopping rule, interview materials, analysis, and credibility strategy are checked only when applicable.
+- Mixed-method integration is explained when claimed.
+- R&D/prototyping separates planned design, implementation, and actual test evidence.
+- Statistics come from reproducible calculations on supplied data.
+- Ethics, consent, permission, anonymity, and data protection are addressed when relevant.
 
-## Gate 3, formulation
+### Professional/technical report path
+- Process descriptions match observation, approved records, or labeled recollection.
+- Current state and proposed state are separate.
+- Analysis method fits the case and evidence.
+- Recommendations map to findings and note limitations/dependencies.
+- Implementation/testing claims require actual artifacts or records.
 
-- Problem formulation has 3 to 5 items, hierarchical, answerable with the data at hand.
-- Objectives match the formulation 1 to 1, in the same order.
-- Benefits are specific, not "useful for society".
-- Every variable has a conceptual and an operational definition.
-- Hypotheses have a direction from theory and a 1 to 1 match with the test in Chapter III.
-- Scope limits are filled.
-- No empirical claim without a source marker.
-- For S2 and S3: a theoretical contribution is claimed.
+### Other artifacts
+Mark Not applicable when no method/process/design is being evaluated. Mark Not verifiable when the check is relevant but evidence is inaccessible.
 
-## Gate 4, design
+## Gate 5: draft quality
+- Prose is complete for the requested stage.
+- Section transitions and terminology are consistent.
+- Tables, figures, equations, diagrams, captions, and source notes match.
+- No internal notes, accidental placeholders, or truncated text are presented as final.
+- Abstract/executive summary matches the body.
 
-- Design chosen with a reason, not only a name.
-- Population, sampling technique, and sample size written, with the formula when probabilistic.
-- Instrument stated with the origin of its items.
-- Validity and reliability tests planned.
-- Each hypothesis has exactly one analysis technique.
-- Assumption tests written in full.
-- All dataset numbers come from a real calculation on the user dataset.
-- Ethics, permission, and anonymity planned.
-- For S2 and S3: design limits and mitigations written.
+## Gate 6: final package
+Run only for final/submission-readiness audits.
+- Identity and required components match the applicable guide.
+- Required appendices/forms/declarations/supplements are present where applicable.
+- Citation/reference cross-check passes.
+- Numbers/claims match source data in targeted checks.
+- No unresolved placeholder is hidden.
+- Formatting follows the guide to the extent the file demonstrates it.
+- Export files open and preserve structure.
+- User has reviewed the content.
 
-## Gate 4, qualitative (replaces the quantitative parts of Gate 4 when the design is not a quantitative survey)
+## Continuous anti-fabrication checks
+No invented identity, data, source, DOI, page, permission, signature, test result, or institutional rule. Every empirical claim has a source marker; every inference and proposal is distinguishable.
 
-- One qualitative design chosen (case study, phenomenology, grounded theory, thematic analysis, or descriptive) with a reason.
-- Paradigm and approach stated, not only the design name.
-- Informants: inclusion and exclusion criteria, purposive or snowball technique, and the stopping rule (saturation), not only "until saturated".
-- Instruments: interview guide in the appendix and consent sheet present.
-- Analysis stages written in order (transcription, open coding, categorization, thematic), not only "thematic analysis".
-- Validity: member checking or triangulation planned.
-- Quote markers are distinct and their sources are clear.
-- No quote, code, theme, or participant count that is not in the transcript.
-- Limits stated honestly: transferable, not generalizable.
-
-## Gate 5, draft
-
-- Every subchapter holds narrative prose, not bullets.
-- Flow between subchapters is coherent.
-- The framework diagram is in Chapter II.
-- Every table has a title and a source.
-- No internal agent notes leak into the draft.
-- No cut-off sentences.
-
-## Gate 6, final
-
-- Title and identity consistent with the plan.
-- Every citation marker has a bibliography entry.
-- Every entry is cited at least once.
-- Dataset numbers in the draft match the dataset profile (spot-check 5 numbers).
-- No placeholder left without a note.
-- Structure follows the campus guide when there is one.
-- Indonesian spelling is correct (KBBI).
-- Export works: Markdown and DOCX both exist.
-- The user agrees with the draft.
-
-## Anti-hallucination gate (applies at every stage)
-
-- No data or reference that does not come from a file or a verified source.
-- No invented identity (student ID, faculty, lecturer, respondent).
-- Every empirical claim has a marker.
-- Every agent inference is marked as inference.
-
-## Sources and credit
-
-Adapted from references/quality-gates.md in proposal-skripsi-skill by Bima Januri (MIT).
+## Gate result
+Record status, evidence/file/page, and blocker for each gate. A failed gate blocks only dependent work and does not erase unrelated findings.

@@ -1,41 +1,56 @@
-# Finding report template
+# Audit finding report template
 
 ## Overall
+- Status: Ready for next review stage / Needs revision / Cannot assess completely.
+- Genre and purpose:
+- Discipline/program/level (if applicable):
+- Institution/journal/target body:
+- File/version and document stage:
+- Guide/rubric/version:
+- Audit scope and limitations:
 
-- Status: Ready for supervisor review, Needs revision, or Cannot assess completely.
-- Program and level:
-- File and version:
-- Pages and chapters reviewed:
-- Not inspected or unverifiable:
+## Scope inspected
+
+| Artifact | Pages/sections | Inspection status | Limitations |
+|---|---|---|---|
+| [file] | [range] | [complete/partial/unreadable/not supplied] | [notes] |
+
+## Applicability summary
+
+| Status | Count | Explanation |
+|---|---:|---|
+| Pass | [n] | [summary] |
+| Needs work | [n] | [summary] |
+| Not applicable | [n] | [reason] |
+| Not verifiable | [n] | [missing evidence] |
 
 ## Findings
 
-| ID | Severity | Location | Finding | Impact | Rule basis | Corrective action | Evidence needed |
-|---|---|---|---|---|---|---|---|
-| F-01 | Critical, Major, Moderate, or Minor | [page or section] | [specific issue] | [why this matters] | [guide page or section] | [action] | [source or data] |
+| ID | Severity | Status | Location | Finding | Impact | Rule/evidence basis | Corrective action | Evidence needed |
+|---|---|---|---|---|---|---|---|---|
+| F-01 | Critical/Major/Moderate/Minor | Needs work/Not verifiable | [page/section] | [issue] | [impact] | [guide/source] | [fix] | [evidence] |
 
-## Cross-chapter traceability
+Do not create findings for Not applicable criteria. Record Not verifiable separately when it affects readiness.
 
-| Problem ID | Evidence | Background | Formulation | Objective | Chapter IV analysis | Proposal | Conclusion |
-|---|---|---|---|---|---|---|---|
-| [ID] | [fact] | [section] | [question] | [objective] | [analysis] | [proposal] | [answer] |
+## Traceability
 
-## Unverifiable checks
+| Purpose/question/objective/requirement | Section/artifact | Evidence/source | Analysis/result | Conclusion/recommendation |
+|---|---|---|---|---|
+| [item] | [location] | [evidence] | [analysis] | [answer/action] |
 
-Identify physical requirements (paper weight, duplex printing), actual logo dimensions, physical stamps and signatures, approval authenticity, and institutional submission or BAA receipt that cannot be verified from the digital report alone.
+## Missing and unverifiable items
+- `[NEED: ...]`
+- `[CHECK: ...]`
+- Inaccessible pages/files:
+- Physical/institutional properties not established by submitted files:
 
-## Prioritized revision sequence
+## Prioritized revision plan
 
-1. Resolve critical program, outline, evidence, and ethics issues.
-2. Repair chapter logic and problem-analysis-to-proposal traceability.
-3. Complete missing required sections and supporting appendices.
-4. Correct diagrams, references, page setup, heading, and caption numbering.
-5. Polish academic language and consistency.
+| Priority | Finding IDs | Action | Completion evidence |
+|---|---|---|---|
+| Blocker | [IDs] | [action] | [evidence] |
+| Important | [IDs] | [action] | [evidence] |
+| Improvement | [IDs] | [action] | [evidence] |
 
-## Qualification
-
-This is an assistant-generated compliance review against the supplied guide and the files provided. It is not an official assessment, supervisor approval, or guarantee of grade.
-
-## Sources and credit
-
-Adapted from the finding report template in kp-quality-audit by Muhammad Nabil Deja (MIT).
+## Disclaimer
+This assistant review covers only files and sources listed above. It is not formal approval by a university, supervisor, journal, employer, or regulator.

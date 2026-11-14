@@ -1,103 +1,131 @@
-"""Validate this repo skill metadata and portable local links.
+"""Validate Agent Skills packaging and local repository references.
 
-Standard library only. This is not a general YAML or Markdown parser and does
-not verify external URLs, citation truth, or agent behavior. It checks the
-packaging rules the Agent Skills format needs: every skill has a SKILL.md with
-frontmatter whose name matches its directory, required repo files exist, local
-links resolve, and no absolute local paths leak into skill files.
+This checks packaging only, not academic correctness, source truth or runtime
+behavior. Standard library only; intentionally not a general YAML parser.
 """
-
 from __future__ import annotations
-
 import argparse
 import re
-import sys
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-
 LINK = re.compile(r"\[[^\]\n]*\]\(([^)\n]+)\)")
-ABSOLUTE = re.compile(r"(?:(?<![A-Za-z0-9])[A-Za-z]:[\\/]|file://|/Users/|/home/|/mnt/)")
 FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.S)
+YAML_KEY = re.compile(r"^([A-Za-z_][A-Za-z0-9_-]*):", re.M)
+REF_PATH = re.compile(r"references/[A-Za-z0-9_./-]+")
+ABSOLUTE = re.compile(r"(?:(?<![A-Za-z0-9])[A-Za-z]:[\\/]|file://|/Users/|/home/|/mnt/)")
+SKILLS = ("academic-writing", "outline", "draft", "edit", "audit")
+ROOT_FILES = ("README.md", "LICENSE", "install.sh")
+PRESET_KEYS = ("preset_id", "chapter_count", "problem_statement_location", "chapter2_name",
+    "conceptual_framework_location", "results_discussion_structure", "subchapter_numbering",
+    "max_heading_depth", "citation_style", "abstract_languages", "special_front_matter",
+    "figure_table_numbering", "mandatory_output", "writing_systematics", "similarity_limit",
+    "paper_size", "margin_top", "margin_bottom", "margin_left", "margin_right", "font_family",
+    "font_size", "line_spacing")
 
 
-def parse_frontmatter(text: str) -> dict:
+def parse_frontmatter(text: str) -> dict[str, str]:
     match = FRONTMATTER.match(text)
     if not match:
         return {}
-    fields: dict = {}
+    fields = {}
     for line in match.group(1).splitlines():
-        if ":" not in line:
+        if not line or line.startswith((" ", "#")) or ":" not in line:
             continue
         key, value = line.split(":", 1)
         fields[key.strip()] = value.strip().strip('"').strip("'")
     return fields
 
 
-def local_targets(text: str):
+def local_link_targets(text: str):
     for raw in LINK.findall(text):
         target = raw.strip().strip("<>")
-        if target.startswith("#") or urlsplit(target).scheme:
+        parsed = urlsplit(target)
+        if parsed.scheme or parsed.netloc or not parsed.path:
             continue
-        yield unquote(target.split("#", 1)[0])
+        yield unquote(parsed.path)
 
 
-def validate(root: Path) -> list:
+def validate(root: Path) -> list[str]:
     root = root.resolve()
     errors = []
-    skill_dirs = sorted((root / "skills").glob("*/SKILL.md"))
-    if not skill_dirs:
-        return ["No skills/<name>/SKILL.md."]
-    for required in ("README.md", "LICENSE", "install.sh"):
-        if not (root / required).is_file():
-            errors.append("Missing required file: " + required)
-    for entry in skill_dirs:
-        skill_root = entry.parent.resolve()
-        name = skill_root.name
-        text = entry.read_text(encoding="utf-8")
-        fields = parse_frontmatter(text)
-        if not fields:
-            errors.append(name + ": frontmatter missing.")
+    for filename in ROOT_FILES:
+        if not (root / filename).is_file():
+            errors.append("Missing required file: " + filename)
+    for name in SKILLS:
+        entry = root / "skills" / name / "SKILL.md"
+        if not entry.is_file():
+            errors.append("Missing skill entrypoint: " + str(entry.relative_to(root)))
             continue
-        if fields.get("name") != name:
-            errors.append(name + ": frontmatter name does not match the directory name.")
-        desc = fields.get("description", "")
-        if not desc:
-            errors.append(name + ": description is empty.")
-        elif len(desc) > 500:
-            errors.append(name + ": description is over 500 characters.")
-        if not fields.get("license"):
-            errors.append(name + ": license is empty.")
-        for target in local_targets(text):
-            if ABSOLUTE.search(target):
-                errors.append(name + ": absolute local link: " + target)
-                continue
-            full = (skill_root / target).resolve()
-            if not full.is_file():
-                errors.append(name + ": broken local link: " + target)
-        for bad, label in ((";", "semicolon"), ("\u2014", "em dash"), ("\u2013", "en dash")):
-            if bad in text:
-                errors.append(name + ": contains " + label + " (house rule).")
-    for preset in sorted((root / "shared" / "presets").glob("*.yml")):
-        text = preset.read_text(encoding="utf-8")
-        if "preset_id:" not in text:
-            errors.append("Preset without preset_id: " + preset.name)
+        content = entry.read_text(encoding="utf-8")
+        meta = parse_frontmatter(content)
+        if not meta:
+            errors.append(name + ": malformed frontmatter")
+            continue
+        if meta.get("name") != name:
+            errors.append(name + ": frontmatter name does not match directory")
+        if not meta.get("description") or len(meta["description"]) > 500:
+            errors.append(name + ": missing or overlong description")
+        for required in ("license", "compatibility", "allowed-tools"):
+            if not meta.get(required):
+                errors.append(name + ": missing frontmatter field " + required)
+        if name != "academic-writing" and "## References" not in content:
+            errors.append(name + ": missing References section")
+        if ABSOLUTE.search(content):
+            errors.append(name + ": contains absolute local path")
+        for target in set(REF_PATH.findall(content)):
+            target = target.rstrip(".,;:)")
+            if not (entry.parent / target).is_file():
+                errors.append(name + ": missing reference " + target)
+    for document in sorted(root.rglob("*.md")):
+        if ".git" in document.parts:
+            continue
+        try:
+            content = document.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            errors.append("Unreadable Markdown: " + str(document.relative_to(root)))
+            continue
+        for target in local_link_targets(content):
+            candidate = (document.parent / target).resolve()
+            if not candidate.is_file() and not candidate.is_dir():
+                errors.append(str(document.relative_to(root)) + ": broken link " + target)
+    preset_dir = root / "shared" / "presets"
+    presets = sorted(preset_dir.glob("*.yml")) if preset_dir.is_dir() else []
+    if not presets:
+        errors.append("No shared preset found")
+    for preset in presets:
+        keys = YAML_KEY.findall(preset.read_text(encoding="utf-8"))
+        missing = [key for key in PRESET_KEYS if key not in keys]
+        if missing:
+            errors.append(preset.name + ": missing keys " + ", ".join(missing))
+        duplicates = sorted({key for key in keys if keys.count(key) > 1})
+        if duplicates:
+            errors.append(preset.name + ": duplicate keys " + ", ".join(duplicates))
+    installer = root / "install.sh"
+    if installer.is_file():
+        body = installer.read_text(encoding="utf-8")
+        for name in SKILLS:
+            if name not in body:
+                errors.append("install.sh does not include " + name)
+        if "shared/" not in body:
+            errors.append("install.sh does not copy shared/")
     return errors
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate academic-writing-skills packaging.")
-    parser.add_argument("root", nargs="?", default=".", help="Repo root to validate.")
+    parser = argparse.ArgumentParser(description="Validate skill packaging and local references.")
+    parser.add_argument("root", nargs="?", default=".", help="Repository root")
     args = parser.parse_args()
-    errors = validate(Path(args.root))
-    if errors:
-        print("FAIL: " + str(len(errors)) + " problems.")
-        for item in errors:
-            print("- " + item)
+    problems = validate(Path(args.root))
+    if problems:
+        print(f"FAIL: {len(problems)} packaging issue(s).")
+        for problem in problems:
+            print("- " + problem)
         return 1
-    print("OK: package is valid.")
+    print("OK: package structure, metadata, and local references are valid.")
+    print("NOTE: academic content, source truth, and agent runtime behavior are not tested.")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

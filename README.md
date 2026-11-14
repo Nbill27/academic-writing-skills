@@ -1,6 +1,6 @@
 # academic-writing-skills
 
-General Indonesian academic writing skills, not tied to one campus. Four skills carry a document from outline to submission: build the frame, draft the chapters, edit the language, audit the result. Campus rules are variables, not hardcoded text. Give the skill a guide file and it adapts. Without a guide it uses common Indonesian defaults and marks every uncertain rule `[CHECK: campus guide]`.
+General Indonesian academic writing skills, not tied to one campus. Five skills carry a document from outline to submission: a dispatcher routes the task, then outline builds the frame, draft writes the sections, edit fixes the language, and audit checks the result. They cover research theses, journal articles, internship reports, and technical reports. Campus rules are variables, not hardcoded text. Give the skill a guide file and it adapts. Without a guide it uses common Indonesian defaults and marks every uncertain rule `[CHECK: campus guide]`.
 
 Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root, so any agent that reads that format can use them.
 
@@ -20,6 +20,7 @@ Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root,
 
 | Skill | What it does |
 | --- | --- |
+| `academic-writing` | Routes an academic writing task to the smallest suitable skill or chain: outline, draft, edit, audit. Identifies genre, applicable rules, evidence, and the next step. Use for end-to-end help or when unsure which specialist fits. |
 | `outline` | Builds and checks the outline before drafting, or condenses existing files into one outline. Starts from a core map of the gap (Should versus Is), adapts to any campus guide through 14 variables, checks with the universal checklist, and gives the title last. |
 | `draft` | Drafts Chapter I to Chapter V chapter by chapter from the student own material, with evidence-first discipline, quantitative, qualitative, and R and D paths, and export to Markdown, DOCX, and PDF. |
 | `edit` | Edits Indonesian academic prose without changing its facts: EYD V and KBBI, effective sentences, and removal of machine-writing patterns, with clear editing scopes from typo fix to rewrite. |
@@ -32,31 +33,36 @@ Each skill folder also holds a `references/` directory with the deep material th
 ```
 academic-writing-skills/
 ├── skills/
+│   ├── academic-writing/ # dispatcher: route to the smallest suitable skill set
+│   │   └── SKILL.md
 │   ├── outline/          # frame, gap map, 14 variables, checklist
 │   │   ├── SKILL.md
-│   │   └── references/   # guide-adapter, checklist, genre-research, genre-report
+│   │   └── references/   # guide-adapter, checklist, genre-research, genre-report, genre-article
 │   ├── draft/            # Chapter I to V, abstracts, export
 │   │   ├── SKILL.md
-│   │   └── references/   # chapter1..chapter5, export
+│   │   └── references/   # chapter1..chapter5, export, article-manuscript
 │   ├── edit/             # EYD V, KBBI, machine patterns
 │   │   ├── SKILL.md
 │   │   └── references/   # ai-patterns, eyd-kbbi, keep-it, editing-scopes
 │   └── audit/            # gates, layered QC, reference verification
 │       ├── SKILL.md
-│       └── references/   # gates, layered-qc, reference-verification, finding-report
+│       └── references/   # gates, layered-qc, reference-verification, finding-report, genre modules
 ├── shared/
 │   ├── campus-presets.md     # index of presets and how to add one
 │   ├── institution-profile.md
+│   ├── workflow-contract.md  # shared routing, evidence labels, handoffs
 │   └── presets/
 │       └── generic.yml       # national default, 4-4-3-3 margins
 ├── scripts/
 │   └── validate_package.py   # packaging checks, standard library only
+├── tests/
+│   └── test_validate_package.py
 ├── install.sh
 ├── LICENSE
 └── README.md
 ```
 
-The skill text refers to `shared/campus-presets.md` and `shared/presets/` relative to the skills root. Keep the `shared/` folder next to the four skill folders after installing, or the preset lookup will not resolve.
+The skill text refers to `shared/campus-presets.md` and `shared/presets/` relative to the skills root. Keep the `shared/` folder next to the five skill folders after installing, or the preset lookup will not resolve.
 
 ## How the campus adapter works
 
@@ -87,7 +93,7 @@ The `cp` blocks below are for a first install. Re-running them over an existing 
 git clone https://github.com/Nbill27/academic-writing-skills.git
 cd academic-writing-skills
 mkdir -p ~/.claude/skills
-cp -r skills/outline skills/draft skills/edit skills/audit ~/.claude/skills/
+cp -r skills/academic-writing skills/outline skills/draft skills/edit skills/audit ~/.claude/skills/
 cp -r shared ~/.claude/skills/shared
 ```
 
@@ -99,7 +105,7 @@ Verify with `claude --help`, then ask for a skill by name inside a session.
 git clone https://github.com/Nbill27/academic-writing-skills.git
 cd academic-writing-skills
 mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills"
-cp -r skills/outline skills/draft skills/edit skills/audit "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills/"
+cp -r skills/academic-writing skills/outline skills/draft skills/edit skills/audit "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills/"
 cp -r shared "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills/shared"
 ```
 
@@ -111,7 +117,7 @@ Verify with `opencode --help`, then ask for a skill by name inside a session.
 git clone https://github.com/Nbill27/academic-writing-skills.git
 cd academic-writing-skills
 mkdir -p ~/.agents/skills
-cp -r skills/outline skills/draft skills/edit skills/audit ~/.agents/skills/
+cp -r skills/academic-writing skills/outline skills/draft skills/edit skills/audit ~/.agents/skills/
 cp -r shared ~/.agents/skills/shared
 ```
 
@@ -123,7 +129,7 @@ Verify with `codex --help`. Codex reads `~/.agents/skills` for user scope and `.
 git clone https://github.com/Nbill27/academic-writing-skills.git
 cd academic-writing-skills
 mkdir -p ~/.hermes/skills
-cp -r skills/outline skills/draft skills/edit skills/audit ~/.hermes/skills/
+cp -r skills/academic-writing skills/outline skills/draft skills/edit skills/audit ~/.hermes/skills/
 cp -r shared ~/.hermes/skills/shared
 hermes skills list
 ```
@@ -134,7 +140,7 @@ hermes skills list
 git clone https://github.com/Nbill27/academic-writing-skills.git
 cd academic-writing-skills
 mkdir -p ~/.codebuddy/skills
-cp -r skills/outline skills/draft skills/edit skills/audit ~/.codebuddy/skills/
+cp -r skills/academic-writing skills/outline skills/draft skills/edit skills/audit ~/.codebuddy/skills/
 cp -r shared ~/.codebuddy/skills/shared
 ```
 
@@ -168,7 +174,7 @@ Copy the same five entries into the project directory instead of the home direct
 
 ```bash
 mkdir -p .claude/skills
-cp -r skills/outline skills/draft skills/edit skills/audit .claude/skills/
+cp -r skills/academic-writing skills/outline skills/draft skills/edit skills/audit .claude/skills/
 cp -r shared .claude/skills/shared
 ```
 
@@ -177,7 +183,7 @@ Swap `.claude/skills` for `.opencode/skills`, `.agents/skills`, or `.codebuddy/s
 ### Uninstall
 
 ```bash
-rm -rf ~/.claude/skills/outline ~/.claude/skills/draft \
+rm -rf ~/.claude/skills/academic-writing ~/.claude/skills/outline ~/.claude/skills/draft \
        ~/.claude/skills/edit ~/.claude/skills/audit ~/.claude/skills/shared
 ```
 
@@ -187,7 +193,7 @@ Adjust the base directory for the agent you installed into. Remove `shared/` onl
 
 Ask the agent to outline, draft, edit, or audit an academic document. The skill loads when the request matches: outline, draft chapter, background, literature review, research methods, results and discussion, conclusions and suggestions, check language, check spelling, edit manuscript, audit report, check bibliography, or ready for defense.
 
-Typical flow: `outline` for the outline, `draft` for drafting one chapter at a time, `edit` for language, `audit` for the final check before submission.
+Typical flow: `academic-writing` routes the request to the smallest suitable skill or chain, `outline` for the outline, `draft` for drafting one chapter at a time, `edit` for language, `audit` for the final check before submission. For a journal article, the dispatcher routes to the article references instead of the thesis chapters.
 
 The skills work on files in the current project. Point the agent at the guide file and the draft, then name the skill you want. Nothing is uploaded anywhere, the work stays in the local session.
 
@@ -197,7 +203,13 @@ The skills work on files in the current project. Point the agent at the guide fi
 python3 scripts/validate_package.py
 ```
 
-Checks frontmatter names and descriptions, required repo files, local link targets, and absolute local paths in skill files. Exit code `0` prints `OK: package is valid.`, exit code `1` lists every problem found.
+Checks frontmatter names and descriptions, required repo files, local link targets, preset keys, and absolute local paths in skill files. Exit code `0` prints `OK: package structure, metadata, and local references are valid.`, exit code `1` lists every problem found. The validator checks packaging only; it does not test academic content, source truth, or agent runtime behavior.
+
+Unit tests for the validator live in `tests/`:
+
+```bash
+python3 -m unittest discover -s tests
+```
 
 Pass a path to validate a copy somewhere else:
 
