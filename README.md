@@ -35,19 +35,34 @@ Each skill folder also holds a `references/` directory with the deep material th
 ## Skill flow
 
 ```mermaid
-flowchart LR
-    U([User request]) --> W[academic-writing<br/>Dispatcher]
-    W --> O[outline]
-    W --> D[draft]
-    W --> E[edit]
-    W --> A[audit]
-    O --> D
-    D --> E
-    E --> A
-    O --> OUT([Ready for review<br/>or submission])
-    D --> OUT
-    E --> OUT
-    A --> OUT
+flowchart TD
+    A([User memberikan instruksi atau dokumen]) --> B[Dispatcher / Skill Router]
+
+    B --> C{Identifikasi kebutuhan}
+
+    C --> D[Academic Writing]
+    C --> E[Outline]
+    C --> F[Draft]
+    C --> G[Edit]
+    C --> H[Audit]
+
+    D --> I[Memuat referensi dan aturan akademik]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+
+    I --> J[Menjalankan proses sesuai skill]
+    J --> K{Perlu evaluasi lanjutan?}
+
+    K -->|Ya| H
+    K -->|Tidak| L[Hasil dan rekomendasi]
+
+    H --> M[Research Coherence Audit]
+    M --> L
+
+    L --> N([User melakukan revisi atau melanjutkan penulisan])
+    N --> B
 ```
 
 The dispatcher routes each request to the smallest suitable skill or chain: a single skill for a single job, the full `outline` → `draft` → `edit` → `audit` chain for end-to-end work, skipping stages that are already done or irrelevant. It also picks the genre route: research theses use the chapter references (I–V), journal articles follow the target venue rules, internship and KP reports use placement checks, and technical reports follow purpose and evidence.
@@ -269,6 +284,49 @@ python skills/audit/scripts/prepare_research_audit.py draft.docx --level undergr
 # Complete audit.json using audit.json.template and research-audit-schema.md
 python skills/audit/scripts/validate_research_audit.py .research-audit/draft-01
 python skills/audit/scripts/revision_impact.py old.md new.md --output revision-impact.md
+```
+
+```mermaid
+flowchart TD
+    A([Manuskrip dan dokumen pendukung]) --> B[Prepare Research Audit]
+
+    B --> C[Ekstraksi Dokumen]
+    C --> D[Identifikasi Struktur dan Bab]
+    D --> E[Research Map]
+    D --> F[Machine Findings]
+    E --> G[Audit Workspace]
+    F --> G
+
+    G --> H[Research Coherence Audit]
+
+    H --> I1[Logic Reviewer]
+    H --> I2[Consistency Reviewer]
+    H --> I3[Methodology Reviewer]
+    H --> I4[Evidence Reviewer]
+    H --> I5[Devil's Advocate]
+
+    I1 --> J[Finding Synthesis]
+    I2 --> J
+    I3 --> J
+    I4 --> J
+    I5 --> J
+
+    J --> K[Research Coherence Matrix]
+    K --> L[Finding Validation]
+
+    L --> M{Evidence dan lokasi valid?}
+    M -->|Tidak| N[Perbaiki atau tandai Not Assessable]
+    N --> L
+
+    M -->|Ya| O[Generate Audit Report]
+    O --> P[Prioritaskan Temuan]
+    P --> Q([Revisi Manuskrip])
+
+    Q --> R[Revision Impact Analysis]
+    R --> S{Ada dampak pada bagian lain?}
+    S -->|Ya| T[Periksa Konsistensi Bagian Terkait]
+    T --> H
+    S -->|Tidak| U([Audit Selesai])
 ```
 
 The scripts use the Python standard library. Automatic signals are candidates, not academic verdicts. See `skills/audit/references/research-coherence.md` and `docs/THIRD_PARTY_ATTRIBUTION.md`.
