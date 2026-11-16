@@ -51,6 +51,10 @@ When moving between skills, preserve: task/genre; applicable guide and provenanc
 
 Not applicable is not a failure. Not verifiable is not proof of non-compliance.
 
+## Research record handoff
+
+For multi-stage research, maintain `shared/research-record.md` (or a project-local copy) with research questions, design, terms, scope, evidence, decisions, cross-section dependencies, open issues, and next action. Never invent missing fields.
+
 ## Output discipline
 
 Separate verified findings from recommendations. Cite exact guide pages and source metadata when available. Do not fabricate page numbers or imply that inaccessible files or sources were inspected.

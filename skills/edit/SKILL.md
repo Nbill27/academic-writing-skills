@@ -1,7 +1,7 @@
 ---
 name: edit
 description: "Edit Indonesian academic prose and other scholarly writing while preserving facts, claims, citations, disciplinary terminology, and author voice. Supports correction, editing, rewriting, and drafting from user material."
-version: 1.1.0
+version: 1.2.0
 license: MIT
 compatibility: "Hermes, CodeBuddy, Claude Code, OpenCode, Codex, and any agent that reads the Agent Skills format."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash

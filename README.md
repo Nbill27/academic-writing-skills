@@ -2,7 +2,7 @@
 
 # academic-writing-skills
 
-General Indonesian academic writing skills, not tied to one campus. Five skills carry a document from outline to submission: a dispatcher routes the task, then outline builds the frame, draft writes the sections, edit fixes the language, and audit checks the result. They cover research theses, journal articles, internship reports, and technical reports. Campus rules are variables, not hardcoded text. Give the skill a guide file and it adapts. Without a guide it uses common Indonesian defaults and marks every uncertain rule `[CHECK: campus guide]`.
+General Indonesian academic writing skills, not tied to one campus. Five skills carry a document from outline to submission: a dispatcher routes the task, then outline builds the frame, draft writes the sections, edit fixes the language, and audit checks the result. They cover research theses, journal articles, internship reports, and technical reports. Campus rules are variables, not hardcoded text. The audit also examines the internal logic of the research, cross-section consistency, methodology fit, and claim-evidence alignment—not only campus-guideline compliance. Give the skill a guide file and it adapts. Without a guide it uses common Indonesian defaults and marks every uncertain rule `[CHECK: campus guide]`.
 
 Plain Agent Skills format: each skill is a folder with a `SKILL.md` at its root, so any agent that reads that format can use them.
 
@@ -259,6 +259,19 @@ Ask the agent to outline, draft, edit, or audit an academic document. The skill 
 Typical flow: `academic-writing` routes the request to the smallest suitable skill or chain, `outline` for the outline, `draft` for drafting one chapter at a time, `edit` for language, `audit` for the final check before submission. For a journal article, the dispatcher routes to the article references instead of the thesis chapters.
 
 The skills work on files in the current project. Point the agent at the guide file and the draft, then name the skill you want. Nothing is uploaded anywhere, the work stays in the local session.
+
+## Research coherence audit
+
+For a Markdown or DOCX thesis, prepare a traceable workspace, complete the AI review, then validate every finding against an exact manuscript quote:
+
+```bash
+python skills/audit/scripts/prepare_research_audit.py draft.docx --level undergraduate --out .research-audit/draft-01
+# Complete audit.json using audit.json.template and research-audit-schema.md
+python skills/audit/scripts/validate_research_audit.py .research-audit/draft-01
+python skills/audit/scripts/revision_impact.py old.md new.md --output revision-impact.md
+```
+
+The scripts use the Python standard library. Automatic signals are candidates, not academic verdicts. See `skills/audit/references/research-coherence.md` and `docs/THIRD_PARTY_ATTRIBUTION.md`.
 
 ## Validate
 

@@ -2,6 +2,24 @@
 
 All notable changes to this repository. Versions refer to the five skills in `skills/`.
 
+## 1.2.0 — 2026-11-16
+
+### Added
+
+- Research Coherence Audit with ten dimensions (problem/gap, questions/objectives, theory, operationalization, method, data/analysis, results, claims/evidence, cross-section consistency, global logic).
+- Dependency-free Markdown/DOCX preparation, audit quote/status validator, and revision-impact comparison scripts.
+- Specialist reviewer protocol for logic, consistency, methodology, evidence, and devil’s-advocate passes.
+- Shared research record and third-party attribution/license notes.
+
+### Changed
+
+- Audit separates guideline compliance from academic coherence and requires evidence-backed findings.
+- Finding report adds Research Coherence Matrix and reviewer synthesis. Dispatcher routes cross-chapter and logic-review requests to audit.
+
+### Notes
+
+- Third-party repositories were used as design references; their complete plugins, prompts, and scripts are not vendored. PDF must be converted before preparation. Automated signals are not academic judgments.
+
 ## 1.1.0 — 2026-11-14
 
 ### Added

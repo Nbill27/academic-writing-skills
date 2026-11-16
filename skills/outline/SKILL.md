@@ -1,7 +1,7 @@
 ---
 name: outline
 description: "Build and check outlines for research, journal articles, internship reports, and other academic or professional documents. Adapts structure to the applicable guide, identifies the core gap or purpose, checks traceability, and proposes titles last when appropriate."
-version: 1.1.0
+version: 1.2.0
 license: MIT
 compatibility: "Hermes, CodeBuddy, Claude Code, OpenCode, Codex, and any agent that reads the Agent Skills format."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash

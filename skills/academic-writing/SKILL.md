@@ -1,7 +1,7 @@
 ---
 name: academic-writing
 description: "Route and coordinate Indonesian academic writing tasks across outline, draft, edit, and audit. Identify genre, applicable campus or journal rules, evidence, and the smallest suitable workflow. Use for end-to-end academic writing help or choosing the right specialist skill."
-version: 1.1.0
+version: 1.2.0
 license: MIT
 compatibility: "Hermes, CodeBuddy, Claude Code, OpenCode, Codex, and any agent that reads the Agent Skills format."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
@@ -23,6 +23,7 @@ Identify intent (outline/draft/edit/audit/combined), genre, purpose, discipline,
 | Draft a section from user material | `draft` |
 | Correct or revise existing text | `edit` |
 | Inspect requirements, evidence, citations, or readiness | `audit` |
+| Review research logic, cross-chapter consistency, methodology fit, or claim-evidence alignment | `audit` |
 | End-to-end work explicitly requested | `outline` → `draft` → `edit` → `audit`, skipping completed or irrelevant stages |
 
 ## Genre routing
