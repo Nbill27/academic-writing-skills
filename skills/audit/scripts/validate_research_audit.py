@@ -55,7 +55,8 @@ def validate(ws,a):
 def report(a,fs):
  rank={'critical':0,'major':1,'moderate':2,'minor':3};fs=sorted(fs,key=lambda f:(rank[f['severity']],f['location']['line']))
  out=['# Research Coherence Audit Report','',f"**Level:** {a.get('level','unspecified')}  ",f"**Research type:** {a.get('research_type','not classified')}",'','## Summary','',a['summary'],'','## Check status','','| ID | Status | Coverage | Basis |','|---|---|---|---|']
- for ck,c in sorted(a['checks'].items()):out.append(f"| {ck} | {c.get('status')} | {c.get('coverage','—')} | {str(c.get('basis','')).replace('|','\\|')} |")
+ for ck,c in sorted(a['checks'].items()):
+  basis=str(c.get('basis','')).replace('|','\\|');out.append(f"| {ck} | {c.get('status')} | {c.get('coverage','—')} | {basis} |")
  out+=['','## Findings','']
  if not fs:out.append('No validated findings.')
  for f in fs:
